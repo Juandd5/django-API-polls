@@ -8,7 +8,7 @@ from django.utils import timezone
 
 class Question(models.Model):
     question_text = models.CharField(max_length=200)
-    pub_date = models.DateTimeField('date published', auto_now_add=True)
+    pub_date = models.DateTimeField('Published Date', auto_now_add=True)
 
     def __str__(self) -> str:
         return self.question_text
@@ -18,7 +18,9 @@ class Question(models.Model):
 
     class Meta():
         ordering = ['pub_date']
+        verbose_name = 'Pregunta'
         verbose_name_plural = 'Preguntas'
+        db_table = 'preguntas' #Nombre de la tabla en la base de datos
 
 
 class Choice(models.Model):
@@ -30,4 +32,6 @@ class Choice(models.Model):
         return self.choice_text
     
     class Meta():
+        verbose_name = 'Respuesta'
         verbose_name_plural = 'Respuestas'
+        db_table = 'respuestas'
