@@ -1,28 +1,48 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
+from django.views.generic import ListView, DetailView
 
 from .models import Question, Choice
 
-def index(request):
-    latest_question_list = Question.objects.all()
-    return render(request, 'polls/index.html', {
-        'latest_question_list': latest_question_list
-    })
+# def index(request):
+#     latest_question_list = Question.objects.all()
+#     return render(request, 'polls/index.html', {
+#         'latest_question_list': latest_question_list
+#     })
+# 
+# 
+# def detail(request, question_id):
+#     question = get_object_or_404(Question, pk=question_id)
+#     return render(request, 'polls/detail.html', {
+#         'question': question
+#     })
+# 
+# 
+# def results(request, question_id):
+#     question = get_object_or_404(Question, pk=question_id)
+#     return render(request, 'polls/results.html',{
+#         'question': question
+#     })
 
 
-def detail(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
-    return render(request, 'polls/detail.html', {
-        'question': question
-    })
+class IndexView(ListView):
+    template_name = 'polls/index.html'
+    context_object_name = 'latest_question_list'
+
+    def get_queryset(self):
+        """Returns all questions"""
+        return Question.objects.order_by('-pub_date') #[:5] agregando esto me traigo las últimas 5
 
 
-def results(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
-    return render(request, 'polls/results.html',{
-        'question': question
-    })
+class DetailView(DetailView):
+    model = Question # con esta línea reemplazo -> question = get_object_or_404(Question, pk=question_id)
+    template_name = 'polls/detail.html' # con esta linea reemplazo -> return render(request, 'polls/detail.html', {...
+
+
+class ResultView(DetailView):
+    model = Question
+    template_name = 'polls/results.html'
 
 
 def vote(request, question_id):

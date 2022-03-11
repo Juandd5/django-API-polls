@@ -5,11 +5,11 @@ from . import views #del paquete polls import ...
 app_name = 'polls'
 urlpatterns = [
     #ex: /polls
-    path('', views.index, name='index'), #index es la función que creé en views, le agrego un nombre descriptivo
+    path('', views.IndexView.as_view(), name='index'), #index es la función que creé en views, le agrego un nombre descriptivo
     #ex: /polls/5
-    path('<question_id>', views.detail, name='detail'),
+    path('<int:pk>', views.DetailView.as_view(), name='detail'),
     #ex: /polls/results
-    path('<question_id>/results', views.results, name='results'),
+    path('<int:pk>/results', views.ResultView.as_view(), name='results'),
     #ex: /polls/vote
-    path('<question_id>/vote', views.vote, name='vote')
+    path('<int:question_id>/vote', views.vote, name='vote')
 ]
