@@ -14,7 +14,7 @@ class Question(models.Model):
         return self.question_text
 
     def was_created_recently(self):
-        return self.pub_date >= timezone.now() - timedelta(days=1)
+        return timezone.now() >= self.pub_date >= timezone.now() - timedelta(days=1)
 
     class Meta():
         ordering = ['pub_date']
