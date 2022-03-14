@@ -4,6 +4,7 @@ from datetime import timedelta
 #Django
 from django.db import models
 from django.utils import timezone
+from django.core.exceptions import ValidationError
 
 
 class Question(models.Model):
@@ -21,6 +22,10 @@ class Question(models.Model):
         verbose_name = 'Pregunta'
         verbose_name_plural = 'Preguntas'
         db_table = 'preguntas' #Nombre de la tabla en la base de datos
+
+    def clean(self):
+        if self.choice_set.count() < 1:
+            raise ValidationError('Question must have at least one choice')
 
 
 class Choice(models.Model):
