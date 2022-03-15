@@ -1,5 +1,5 @@
 li a {
-    color: white;
+    color: green;
 }
 
 li  a:hover {
@@ -7,5 +7,5 @@ li  a:hover {
 }
 
 body {
-    background: white url("images/background.gif");
+    background: black;
 }
